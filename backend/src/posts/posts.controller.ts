@@ -6,6 +6,7 @@ import {
   Param,
   Put,
   Delete,
+  NotFoundException,
 } from '@nestjs/common';
 import { PostsService } from './posts.service';
 import { CreatePostDto, UpdatePostDto } from './posts.dto';
@@ -15,7 +16,8 @@ export class PostsController {
   constructor(private postsService: PostsService) {}
 
   @Post()
-  create(@Body() createPostDto: CreatePostDto) {
+  // return 201 on creation
+  async create(@Body() createPostDto: CreatePostDto) {
     const post = this.postsService.create(createPostDto);
     return { success: true, data: post };
   }
@@ -30,7 +32,7 @@ export class PostsController {
   findOne(@Param('id') id: string) {
     const post = this.postsService.findOne(id);
     if (!post) {
-      return { success: false, message: 'Post not found' };
+      throw new NotFoundException('Post not found');
     }
     return { success: true, data: post };
   }
@@ -39,7 +41,7 @@ export class PostsController {
   update(@Param('id') id: string, @Body() updatePostDto: UpdatePostDto) {
     const post = this.postsService.update(id, updatePostDto);
     if (!post) {
-      return { success: false, message: 'Post not found' };
+      throw new NotFoundException('Post not found');
     }
     return { success: true, data: post };
   }
@@ -48,7 +50,7 @@ export class PostsController {
   remove(@Param('id') id: string) {
     const success = this.postsService.remove(id);
     if (!success) {
-      return { success: false, message: 'Post not found' };
+      throw new NotFoundException('Post not found');
     }
     return { success: true, message: 'Post deleted' };
   }
