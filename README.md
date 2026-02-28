@@ -1,4 +1,8 @@
-# Blog CMS - Full Stack Application
+# Learn AI (Github CoPilot)
+
+The main purpose of this project is to have a hands-on example with GitHub Copilot for creating custom agents, prompts, instructions, and skills.
+
+# The Example Project: Blog CMS - Full Stack Application
 
 A modern Blog Content Management System built with Angular frontend and NestJS backend, fully containerized with Docker.
 
